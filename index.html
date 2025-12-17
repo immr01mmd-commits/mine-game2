@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>Mine Game</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Telegram WebApp -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: #0f172a;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .card {
+      background: #020617;
+      border-radius: 16px;
+      padding: 24px;
+      width: 100%;
+      max-width: 320px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,.5);
+    }
+
+    h1 {
+      margin-bottom: 12px;
+      font-size: 22px;
+    }
+
+    .coin {
+      font-size: 28px;
+      margin: 16px 0;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      font-size: 18px;
+      border: none;
+      border-radius: 12px;
+      background: #22c55e;
+      color: #000;
+      cursor: pointer;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h1>⛏ Mine Game</h1>
+  <div class="coin">💰 <span id="coin">0</span></div>
+  <button onclick="mine()">Mine</button>
+</div>
+
+<script>
+  const tg = window.Telegram.WebApp;
+  tg.ready();
+  tg.expand();
+
+  let coins = localStorage.getItem("coins")
+    ? parseInt(localStorage.getItem("coins"))
+    : 0;
+
+  document.getElementById("coin").innerText = coins;
+
+  function mine() {
+    coins++;
+    document.getElementById("coin").innerText = coins;
+    localStorage.setItem("coins", coins);
+
+    if (tg.HapticFeedback) {
+      tg.HapticFeedback.impactOccurred("light");
+    }
+  }
+</script>
+
+</body>
+</html>
